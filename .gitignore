@@ -1,0 +1,12 @@
+# Venv
+bin/
+lib/
+lib64
+pyvenv.cfg
+share/
+
+# Key
+src/config.json
+
+# Annoying
+*__pycache__*
