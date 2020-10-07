@@ -9,7 +9,7 @@ class PingCog(commands.Cog):
 
     @commands.command(name='ping', hidden=True)
     async def get_infor(self, ctx):
-        await ctx.send("pong!")
+        await ctx.send("Pong!")
 
 def setup(bot):
     bot.add_cog(PingCog(bot))
