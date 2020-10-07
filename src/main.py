@@ -22,6 +22,10 @@ class CogReloader(FileSystemEventHandler):
             try:
                 self.bot.unload_extension(
                     f"cogs.{event.src_path.split('/')[-1].split('.')[0]}")
+            except Exception as e:
+                print("Failed to unload cog: {}".format(e))
+                
+            try:
                 self.bot.load_extension(
                     f"cogs.{event.src_path.split('/')[-1].split('.')[0]}")
             except Exception as e:
