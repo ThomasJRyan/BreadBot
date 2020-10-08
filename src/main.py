@@ -78,7 +78,7 @@ async def on_ready():
         bot.update_channel_id = bot.get_channel(config.get('update_channel'))
     print(bot.update_channel_id)
 
-# Waiting to hear from the webhook 
+# Waiting to hear from the webhook
 @bot.event
 async def on_message(message):
     print(bot.update_channel_id)
