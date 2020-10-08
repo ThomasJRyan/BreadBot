@@ -52,8 +52,9 @@ bot = commands.Bot(
     activity=discord.Game("Use ~help for commands")
 )
 
-# Variable for getting updates - Terrible practice. If you're reading this don't judge me too badly :(
+# Variables - Terrible practice. If you're reading this don't judge me too badly :(
 bot.update_channel_id = None
+bot.initial_role = None
 
 # Start the show
 if __name__ == '__main__':
@@ -76,6 +77,8 @@ async def on_ready():
     print("The bot is ready")
     if config.get('update_channel'):
         bot.update_channel_id = bot.get_channel(config.get('update_channel'))
+    if config.get('initial_role'):
+        bot.initial_role = bot.get_role(config.get('initial_role'))
 
 # Waiting to hear from the webhook
 @bot.event
@@ -83,6 +86,11 @@ async def on_message(message):
     if message.channel == bot.update_channel_id:
         os.system('cd .. && git pull -q --no-edit && cd src/')
     await bot.process_commands(message)
+
+# Add the `initial_role` when a member joins
+@bot.event
+async def on_member_join(member):
+    await member.add_roles(bot.initial_role)
 
 # Run the bot
 bot.run(config.get('key'), bot=True, reconnect=True)
