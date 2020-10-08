@@ -35,7 +35,7 @@ class RoleCog(commands.Cog):
 
     @commands.command(name='donegame', aliases=['dg'])
     @commands.check(is_admin)
-    async def game_with(self, ctx):
+    async def done_game(self, ctx):
         if not self.config.get('stream_role'):
             await ctx.send('Error: `stream_role` not configured. Talk to your host.')
             return
