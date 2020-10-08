@@ -76,14 +76,12 @@ async def on_ready():
     print("The bot is ready")
     if config.get('update_channel'):
         bot.update_channel_id = bot.get_channel(config.get('update_channel'))
-    print(bot.update_channel_id)
 
 # Waiting to hear from the webhook 
 @bot.event
 async def on_message(message):
-    print(bot.update_channel_id)
     if message.channel == bot.update_channel_id:
-        print("It works!")
+        os.system('cd .. && git pull -q && cd src')
     await bot.process_commands(message)
 
 # Run the bot
