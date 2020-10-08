@@ -9,8 +9,12 @@ from discord.ext import commands
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler, FileModifiedEvent
 
+# Get configuration
 with open('./config.json') as c:
     config = json.load(c)
+
+# Variable for getting updates
+channel = None
 
 # Reload all cogs when they change
 class CogReloader(FileSystemEventHandler):
@@ -24,7 +28,7 @@ class CogReloader(FileSystemEventHandler):
                     f"cogs.{event.src_path.split('/')[-1].split('.')[0]}")
             except Exception as e:
                 print("Failed to unload cog: {}".format(e))
-                
+
             try:
                 self.bot.load_extension(
                     f"cogs.{event.src_path.split('/')[-1].split('.')[0]}")
@@ -33,7 +37,7 @@ class CogReloader(FileSystemEventHandler):
 
 
 # Bot description
-description = "BreadBot - For doing things for the Bakery"
+description = "BiscottiBot - Bringing you freshly baked commands"
 
 # Bot cogs
 cog_files = os.listdir('./cogs')
@@ -46,7 +50,7 @@ def global_check(ctx):
 # Create the bot
 bot = commands.Bot(
     command_prefix='~',
-    owner_id=160941453671923722,
+    owner_id=config.get('owner'),
     description=description,
     activity=discord.Game("Use ~help for commands")
 )
@@ -70,7 +74,15 @@ if __name__ == '__main__':
 @bot.event
 async def on_ready():
     print("The bot is ready")
+    if config.get('update_channel'):
+        channel = bot.get_channel(config.get('update_channel'))
 
+# Waiting to hear from the webhook
+@bot.event
+async def on_message(message):
+    if message.channel == channel:
+        print("It works!")
+    await bot.process_commands(message)
 
 # Run the bot
-bot.run(config['key'], bot=True, reconnect=True)
+bot.run(config.get('key'), bot=True, reconnect=True)
