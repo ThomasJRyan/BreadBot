@@ -30,7 +30,7 @@ class RoleCog(commands.Cog):
             await ctx.send('Member already has this role')
             return
 
-        await member.add_roles([role])
+        await member.add_roles(role)
         await ctx.send("Member has been given the `On Stream` role!")
 
         
