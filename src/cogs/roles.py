@@ -33,6 +33,20 @@ class RoleCog(commands.Cog):
         await member.add_roles(role)
         await ctx.send("Member has been given the `On Stream` role!")
 
+    @commands.command(name='donegame', aliases=['dg'])
+    @commands.check(is_admin)
+    async def game_with(self, ctx):
+        if not self.config.get('stream_role'):
+            await ctx.send('Error: `stream_role` not configured. Talk to your host.')
+            return
+
+        role = ctx.guild.get_role(self.config.get('stream_role'))
+
+        for member in ctx.guild.members:
+            if role in member.roles:
+                await member.remove_roles(role)
+
+        await ctx.send("All members have be stripped of the `On Stream` role")
         
 
 def setup(bot):
