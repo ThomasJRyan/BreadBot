@@ -18,20 +18,20 @@ class RoleCog(commands.Cog):
     @commands.check(is_admin)
     async def game_with(self, ctx, member: discord.Member = None):
         if not self.config.get('stream_role'):
-            ctx.send('Error: `stream_role` not configured. Talk to your host.')
+            await ctx.send('Error: `stream_role` not configured. Talk to your host.')
             return
         if not member:
-            ctx.send('Usage: `~gamewith <@member>`')
+            await ctx.send('Usage: `~gamewith <@member>`')
             return
 
         role = ctx.guild.get_role(self.config.get('stream_role'))
 
         if role in member.roles:
-            ctx.send('Member already has this role')
+            await ctx.send('Member already has this role')
             return
 
-        member.add_roles([role])
-        ctx.send("Member has been given the `On Stream` role!")
+        await member.add_roles([role])
+        await ctx.send("Member has been given the `On Stream` role!")
 
         
 
