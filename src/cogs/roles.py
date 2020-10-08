@@ -3,15 +3,19 @@ import json
 import discord
 from discord.ext import commands
 
-
 class RoleCog(commands.Cog):
+    """Any commands involving docstrings go here
+
+    Commands:
+        gamewith - Adds 'On Stream' role to a user
+        donegame - Removes 'On Stream' role from all users
+    """
     def __init__(self, bot):
         self.bot = bot
         with open('./config.json') as c:
             self.config = json.load(c)
 
     async def is_admin(ctx, hidden=True):
-        # print(ctx.author.guild_permissions.administrator)
         return ctx.author.guild_permissions.administrator
 
     @commands.command(name='gamewith', aliases=['gw'])
