@@ -74,11 +74,16 @@ if __name__ == '__main__':
 # When everything is ready
 @bot.event
 async def on_ready():
-    print("The bot is ready")
+    guild = None
+    if config.get('server_id'):
+        guild = bot.get_guild(config.get('server_id'))
     if config.get('update_channel'):
         bot.update_channel_id = bot.get_channel(config.get('update_channel'))
-    if config.get('initial_role'):
-        bot.initial_role = bot.get_role(config.get('initial_role'))
+    if config.get('initial_role') and guild:
+        bot.initial_role = guild.get_role(config.get('initial_role'))
+    
+    print("The bot is ready")
+
 
 # Waiting to hear from the webhook
 @bot.event
