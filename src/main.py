@@ -81,7 +81,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if message.channel == bot.update_channel_id:
-        os.system('cd .. && git pull -q && cd src')
+        os.system('cd .. && git pull -q --no-edit && cd src/')
     await bot.process_commands(message)
 
 # Run the bot
