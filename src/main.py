@@ -13,9 +13,6 @@ from watchdog.events import FileSystemEventHandler, FileModifiedEvent
 with open('./config.json') as c:
     config = json.load(c)
 
-# Variable for getting updates
-channel = None
-
 # Reload all cogs when they change
 class CogReloader(FileSystemEventHandler):
     def __init__(self, bot):
@@ -55,6 +52,9 @@ bot = commands.Bot(
     activity=discord.Game("Use ~help for commands")
 )
 
+# Variable for getting updates - Terrible practice. If you're reading this don't judge me too badly :(
+bot.update_channel_id = None
+
 # Start the show
 if __name__ == '__main__':
     event_handler = CogReloader(bot)
@@ -75,14 +75,14 @@ if __name__ == '__main__':
 async def on_ready():
     print("The bot is ready")
     if config.get('update_channel'):
-        channel = bot.get_channel(config.get('update_channel'))
-    print(channel)
+        bot.update_channel_id = bot.get_channel(config.get('update_channel'))
+    print(bot.update_channel_id)
 
-# Waiting to hear from the webhook
+# Waiting to hear from the webhook 
 @bot.event
 async def on_message(message):
-    print(channel)
-    if message.channel == channel:
+    print(bot.update_channel_id)
+    if message.channel == bot.update_channel_id:
         print("It works!")
     await bot.process_commands(message)
 
