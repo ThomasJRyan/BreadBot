@@ -1,4 +1,5 @@
 import os
+import json
 
 import discord
 from discord.ext import commands
@@ -6,6 +7,15 @@ from discord.ext import commands
 class OwnerCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        with open('./config.json') as c:
+            self.config = json.load(c)
+
+    @commands.command(name='test', hidden=True)
+    @commands.is_owner()
+    async def test_command(self, ctx):
+        print(bot.update_channel_id)
+        print(self.config.get('update_channel'))
+        print(bot.get_channel(self.config.get('update_channel')))
 
     @commands.command(name='owninfo', hidden=True)
     @commands.is_owner()
