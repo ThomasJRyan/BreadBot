@@ -12,4 +12,4 @@ source ./bin/activate
 pip install -r requirements.txt
 ```
 
-From there you may add new commands via the cogs functionality of [Discord.py](https://discordpy.readthedocs.io/en/latest/). Please look at existing cogs for example.
+From there you may add new commands via the cogs functionality of [Discord.py](https://discordpy.readthedocs.io/en/latest/). Please look at existing cogs for example. Ideally similar commands should be grouped together.
